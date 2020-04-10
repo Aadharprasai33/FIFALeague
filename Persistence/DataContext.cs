@@ -14,6 +14,8 @@ namespace Persistence
 
       public DbSet<Value> Values { get; set; }  
 
+      public DbSet<League> Leagues {get; set; }
+
 
       protected override void OnModelCreating(ModelBuilder builder){
         builder.Entity<Value>()
