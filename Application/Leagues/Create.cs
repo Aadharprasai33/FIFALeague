@@ -15,6 +15,10 @@ namespace Application.Leagues
 
             public string Title { get; set; }
 
+            public string Description { get; set; }
+
+            public DateTime Date { get; set; }
+
         }
 
         public class Handler : IRequestHandler<Command>
@@ -31,7 +35,9 @@ namespace Application.Leagues
                 var league = new League
                 {
                     Id = request.Id,
-                    Title = request.Title
+                    Title = request.Title,
+                    Description = request.Description,
+                    Date = request.Date
                 };
                 _context.Leagues.Add(league);
                 var success = await _context.SaveChangesAsync() > 0;
