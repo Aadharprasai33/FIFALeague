@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import { Grid } from "semantic-ui-react";
 import { ILeague } from "../../../app/models/league";
 import { LeagueList } from "./LeagueList";
@@ -14,7 +14,9 @@ interface IProps {
   setSelectedLeague: (league: ILeague | null) => void;
   createLeague: (league: ILeague) => void;
   editLeague: (league: ILeague) => void;
-  deleteLeague:  (id: string) => void;
+  deleteLeague:  (e: SyntheticEvent<HTMLButtonElement>, id: string) => void;
+  submit: boolean
+  target:string;
  
 }
 
@@ -28,6 +30,8 @@ export const LeagueDashboard: React.FC<IProps> = ({
   createLeague,
   editLeague,
   deleteLeague,
+  submit,
+  target
   
 }) => {
   return (
@@ -41,6 +45,8 @@ export const LeagueDashboard: React.FC<IProps> = ({
               setEditMode={setEditMode}
               deleteLeague={deleteLeague}
               setSelectedLeague={setSelectedLeague}
+              submit = {submit}
+              target ={target}
             />
           
          
@@ -50,6 +56,7 @@ export const LeagueDashboard: React.FC<IProps> = ({
           {/* executes if left part is not null or edit Mode is !true*/}
           {selectedLeague && !editMode && (
             <LeagueDetails
+              
               leagueToDisplay={selectedLeague}
               setSelectedLeague={setSelectedLeague}
               setEditMode={setEditMode}
@@ -63,6 +70,7 @@ export const LeagueDashboard: React.FC<IProps> = ({
               setEditMode={setEditMode}
               createLeague={createLeague}
               editLeague={editLeague}
+              submit = {submit}
             />
           )}
         </Grid.Column>

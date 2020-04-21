@@ -7,6 +7,7 @@ interface IProps {
   setEditMode: (editMode: boolean) => void;
   createLeague: (league: ILeague) => void;
   editLeague: (league: ILeague) => void;
+  submit: boolean
 }
 
 export const LeagueForm: React.FC<IProps> = ({
@@ -14,6 +15,7 @@ export const LeagueForm: React.FC<IProps> = ({
   setEditMode,
   createLeague,
   editLeague,
+  submit
 }) => {
   const initializeForm = () => {
     if (initialFormState) {
@@ -72,7 +74,7 @@ export const LeagueForm: React.FC<IProps> = ({
           name="date"
           value={league.date}
         />
-        <Button floated="right" positive type="submit" content="Submit" />
+        <Button loading={submit} floated="right" positive type="submit" content="Submit" />
         <Button
           onClick={() => setEditMode(false)}
           floated="right"

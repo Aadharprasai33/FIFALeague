@@ -6,12 +6,14 @@ interface IProps {
   leagueToDisplay: ILeague;
   setEditMode: (setEdit: boolean) => void;
   setSelectedLeague: (league: ILeague | null) => void;
+  
 }
 
 export const LeagueDetails: React.FC<IProps> = ({
   leagueToDisplay,
   setEditMode,
   setSelectedLeague,
+  
 }) => {
   return (
     <div>
@@ -26,7 +28,7 @@ export const LeagueDetails: React.FC<IProps> = ({
         </Card.Content>
         <Card.Content extra>
           <Button.Group widths={2}>
-            <Button
+            <Button 
               onClick={() => setEditMode(true)
               }
               basic

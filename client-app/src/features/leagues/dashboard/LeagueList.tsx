@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import { Item, Segment, Button, List } from "semantic-ui-react";
 import { ILeague } from "../../../app/models/league";
 
@@ -6,9 +6,10 @@ interface IProps {
   leagues: ILeague[];
   selectLeague: (id: string) => void;
   setEditMode: (editMode: boolean) => void;
-  deleteLeague:  (id: string) => void;
+  deleteLeague:  (e: SyntheticEvent<HTMLButtonElement>, id: string) => void;
   setSelectedLeague: (league: ILeague | null) => void;
- 
+  submit: boolean;
+  target:string;
 }
 
 export const LeagueList: React.FC<IProps> = ({
@@ -16,8 +17,10 @@ export const LeagueList: React.FC<IProps> = ({
   selectLeague,
   setEditMode,
   deleteLeague,
-  setSelectedLeague
- 
+  setSelectedLeague,
+  submit,
+  target
+  
 }) => {
   return (
     <div>
@@ -42,12 +45,12 @@ export const LeagueList: React.FC<IProps> = ({
                     color="red"
                     content="view"
                   />
-                  <Button
-                    onClick={() => {
+                  <Button 
+                  name={league.id}
+                  loading={target===league.id && submit}
+                    onClick={(e) => {
                       setSelectedLeague(null);
-                      deleteLeague(league.id);
-
-
+                      deleteLeague(e,league.id);
                     }}
                     content="Delete"
                     floated="right"
