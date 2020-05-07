@@ -1,15 +1,16 @@
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, useContext } from "react";
 import { Grid } from "semantic-ui-react";
 import { ILeague } from "../../../app/models/league";
-import { LeagueList } from "./LeagueList";
-import { LeagueDetails } from "../details/LeagueDetails";
+import LeagueList from "./LeagueList";
+import LeagueDetails from "../details/LeagueDetails";
 import { LeagueForm } from "../form/LeagueForm";
+import { observable } from "mobx";
+import { observer } from "mobx-react-lite";
+import LeagueStore from '../../../app/stores/leagueStore';
 
 interface IProps {
   leagues: ILeague[];
   selectLeague: (id: string) => void;
-  selectedLeague: ILeague | null;
-  editMode: boolean;
   setEditMode: (editMode: boolean) => void;
   setSelectedLeague: (league: ILeague | null) => void;
   createLeague: (league: ILeague) => void;
@@ -20,11 +21,8 @@ interface IProps {
  
 }
 
-export const LeagueDashboard: React.FC<IProps> = ({
-  leagues,
-  selectLeague,
-  selectedLeague,
-  editMode,
+const LeagueDashboard: React.FC<IProps> = ({
+
   setEditMode,
   setSelectedLeague,
   createLeague,
@@ -34,14 +32,16 @@ export const LeagueDashboard: React.FC<IProps> = ({
   target
   
 }) => {
+  const leagueStore = useContext(LeagueStore);
+  const {editMode,selectedLeague} = leagueStore;
   return (
     <div>
       <Grid>
         <Grid.Column width={10}>
          
             <LeagueList
-              leagues={leagues}
-              selectLeague={selectLeague}
+            
+            
               setEditMode={setEditMode}
               deleteLeague={deleteLeague}
               setSelectedLeague={setSelectedLeague}
@@ -56,8 +56,6 @@ export const LeagueDashboard: React.FC<IProps> = ({
           {/* executes if left part is not null or edit Mode is !true*/}
           {selectedLeague && !editMode && (
             <LeagueDetails
-              
-              leagueToDisplay={selectedLeague}
               setSelectedLeague={setSelectedLeague}
               setEditMode={setEditMode}
             />
@@ -78,9 +76,4 @@ export const LeagueDashboard: React.FC<IProps> = ({
     </div>
   );
 };
-
-// <List>
-//   {leagues.map((league: any) => (
-//     <List.Item key={league.id}>{league.title}</List.Item>
-//   ))}
-// </List>
+export default observer(LeagueDashboard);

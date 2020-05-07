@@ -1,10 +1,12 @@
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, useContext } from "react";
 import { Item, Segment, Button, List } from "semantic-ui-react";
 import { ILeague } from "../../../app/models/league";
+import { observable } from "mobx";
+import { observer } from "mobx-react-lite";
+import LeagueStore from '../../../app/stores/leagueStore';
 
 interface IProps {
-  leagues: ILeague[];
-  selectLeague: (id: string) => void;
+ 
   setEditMode: (editMode: boolean) => void;
   deleteLeague:  (e: SyntheticEvent<HTMLButtonElement>, id: string) => void;
   setSelectedLeague: (league: ILeague | null) => void;
@@ -12,9 +14,8 @@ interface IProps {
   target:string;
 }
 
-export const LeagueList: React.FC<IProps> = ({
-  leagues,
-  selectLeague,
+const LeagueList: React.FC<IProps> = ({
+ 
   setEditMode,
   deleteLeague,
   setSelectedLeague,
@@ -22,6 +23,8 @@ export const LeagueList: React.FC<IProps> = ({
   target
   
 }) => {
+const leagueStore = useContext(LeagueStore);
+const {leagues, selectLeague} = leagueStore;
   return (
     <div>
       <Segment clearing>
@@ -65,3 +68,5 @@ export const LeagueList: React.FC<IProps> = ({
     </div>
   );
 };
+
+export default observer(LeagueList);

@@ -1,30 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, Image, Button } from "semantic-ui-react";
 import { ILeague } from "../../../app/models/league";
+import { observer } from "mobx-react-lite";
+import LeagueStore from '../../../app/stores/leagueStore';
 
 interface IProps {
-  leagueToDisplay: ILeague;
+ 
   setEditMode: (setEdit: boolean) => void;
   setSelectedLeague: (league: ILeague | null) => void;
   
 }
 
-export const LeagueDetails: React.FC<IProps> = ({
-  leagueToDisplay,
+const LeagueDetails: React.FC<IProps> = ({
   setEditMode,
   setSelectedLeague,
   
 }) => {
+  const leagueStore = useContext(LeagueStore);
+  const {selectedLeague: leagueToDisplay} = leagueStore;
   return (
     <div>
       <Card fluid>
-        <Image src={`/assets/categoryImages/${leagueToDisplay.title}.jpg`} />
+        <Image src={`/assets/categoryImages/${leagueToDisplay!.title}.jpg`} />
         <Card.Content>
-          <Card.Header>{leagueToDisplay.title}</Card.Header>
+          <Card.Header>{leagueToDisplay!.title}</Card.Header>
           <Card.Meta>
-            <span className="date">{leagueToDisplay.date}</span>
+            <span className="date">{leagueToDisplay!.date}</span>
           </Card.Meta>
-          <Card.Description>{leagueToDisplay.description}</Card.Description>
+          <Card.Description>{leagueToDisplay!.description}</Card.Description>
         </Card.Content>
         <Card.Content extra>
           <Button.Group widths={2}>
@@ -47,3 +50,4 @@ export const LeagueDetails: React.FC<IProps> = ({
     </div>
   );
 };
+export default observer(LeagueDetails);
